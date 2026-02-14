@@ -31,7 +31,8 @@ class PasajeroResource extends Resource
     {
         return PasajerosTable::configure($table);
     }
-
+     
+    //esto es para colocar los relationManager
     public static function getRelations(): array
     {
         return [

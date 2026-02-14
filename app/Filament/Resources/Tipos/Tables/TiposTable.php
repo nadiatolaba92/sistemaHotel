@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Pasajeros\Tables;
+namespace App\Filament\Resources\Tipos\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,23 +8,20 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class PasajerosTable
+class TiposTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('nombre')
+                TextColumn::make('tipo_nombre')
                     ->searchable(),
-                TextColumn::make('apellido')
-                    ->searchable(),
-                TextColumn::make('dni')
-                    ->searchable(),
-                TextColumn::make('teléfono')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Correo Electronico')
-                    ->searchable(),
+                TextColumn::make('capacidad_maxima')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('precio_noche')
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

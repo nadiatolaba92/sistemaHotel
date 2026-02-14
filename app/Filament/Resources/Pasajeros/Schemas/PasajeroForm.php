@@ -12,16 +12,19 @@ class PasajeroForm
         return $schema
             ->components([
                 TextInput::make('nombre')
+                        ->label('Nombre')
                     ->required(),
                 TextInput::make('apellido')
+                        ->label('Apellido')
                     ->required(),
                 TextInput::make('dni')
+                        ->label('DNI')
                     ->required(),
                 TextInput::make('telefono')
                     ->tel()
                     ->required(),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Direccion de Correo')
                     ->email()
                     ->required(),
             ]);
