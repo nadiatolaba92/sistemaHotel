@@ -20,7 +20,7 @@ class HabitacioneResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'habitacion_numero';
+    protected static ?string $recordTitleAttribute = 'estado';
 
     public static function form(Schema $schema): Schema
     {

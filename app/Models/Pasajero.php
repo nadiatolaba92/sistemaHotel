@@ -14,8 +14,11 @@ class Pasajero extends Model
         'email',
     ];
 
-// public function reservas()
-//{
-//return $this->hasMany(Reserva::class);
-//}
+
+    public function habitaciones()
+    {
+        return $this->belongsToMany(Habitacione::class, 'reservas', 'pasajero_id', 'habitacion_id')
+            ->withPivot('id', 'fecha_entrada', 'fecha_salida', 'numero_personas', 'estado', 'tipo_pago', 'total_pagado')
+            ->withTimestamps();
+    }
 }

@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\Habitaciones\Schemas;
 
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+use Filament\Forms\Components\RichEditor;
 
 class HabitacioneForm
 {
@@ -13,19 +17,57 @@ class HabitacioneForm
     {
         return $schema
             ->components([
-                TextInput::make('habitacion_numero')
-                    ->required(),
-                Select::make('tipo_id')
-                    ->relationship('tipo', 'tipo_nombre')
-                    ->preload()
-                    ->searchable()
-                    ->label('Tipo de Habitación')
-                    ->required(),
-                TextInput::make('estado')
-                    ->required()
-                    ->default('disponible'),
-                Textarea::make('descripcion')
-                    ->columnSpanFull(),
+                Wizard::make([
+                    Step::make('Detalles Principales')
+                        ->description('Información básica de la habitación')
+                        ->icon('heroicon-m-home')
+                        ->schema([
+                            TextInput::make('habitacion_numero')
+                                ->label('Número de Habitación')
+                                ->required(),
+
+                            Select::make('tipo_id')
+                                ->label('Tipo de Habitación')
+                                ->relationship('tipo', 'tipo_nombre')
+                                ->native(false)
+                                ->required(),
+
+                            Select::make('estado')
+                                ->label('Estado')
+                                ->options([
+                                    'Disponible' => 'Disponible',
+                                    'Ocupada' => 'Ocupada',
+                                    'Mantenimiento' => 'Mantenimiento',
+                                ])
+                                ->default('Disponible')
+                                ->native(false)
+                                ->required(),
+                        ])->columns(3),
+
+                    Step::make('Información Adicional')
+                        ->description('Descripción y fotografías')
+                        ->icon('heroicon-m-photo')
+                        ->schema([
+                            RichEditor::make('descripcion')
+                                ->label('Descripción')
+                                ->toolbarButtons([
+                                    ['bold', 'italic', 'underline', 'strike', 'subscript', 'superscript', 'link'],
+                                    ['h2', 'h3', 'alignStart', 'alignCenter', 'alignEnd'],
+                                    ['blockquote', 'codeBlock', 'bulletList', 'orderedList'],
+                                    ['table', 'attachFiles'], // The `customBlocks` and `mergeTags` tools are also added here if those features are used.
+                                    ['undo', 'redo'],
+                                ])
+
+                                ->columnSpanFull(),
+
+                            FileUpload::make('imagen')
+                                ->label('Imagen de la Habitación')
+                                ->directory('habitaciones')
+                                ->image()
+                                ->visibility('public')
+                                ->columnSpanFull(),
+                        ]),
+                ])->columnSpanFull(),
             ]);
     }
 }
