@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Habitacione extends Model
+class Habitacione extends Model implements HasMedia
 {
 
-
+    use InteractsWithMedia;
     protected $table = 'habitaciones';
+    //campos que se pueden llenar, propios del  modelo
     protected $fillable = [
         'habitacion_numero',
         'tipo_id',

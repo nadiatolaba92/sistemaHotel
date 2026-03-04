@@ -17,8 +17,10 @@ use Filament\Tables\Table;
 class ReservaResource extends Resource
 {
     protected static ?string $model = Reserva::class;
+    protected static ?string $navigationLabel = 'Reservas del hotel';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDateRange;
+
 
     protected static ?string $recordTitleAttribute = 'estado';
 

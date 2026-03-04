@@ -10,6 +10,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class HabitacioneForm
 {
@@ -60,11 +61,12 @@ class HabitacioneForm
 
                                 ->columnSpanFull(),
 
-                            FileUpload::make('imagen')
+                            SpatieMediaLibraryFileUpload::make('imagen')
                                 ->label('Imagen de la Habitación')
-                                ->directory('habitaciones')
-                                ->image()
-                                ->visibility('public')
+                                ->collection('habitaciones')
+
+                                ->multiple()
+                                ->reorderable()
                                 ->columnSpanFull(),
                         ]),
                 ])->columnSpanFull(),

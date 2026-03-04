@@ -13,12 +13,14 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class PasajeroResource extends Resource
 {
     protected static ?string $model = Pasajero::class;
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string | UnitEnum | null $navigationGroup = 'Gestion de Pasajeros';
+    protected static ?string $navigationLabel = 'Pasajeros';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::UserCircle;
 
     protected static ?string $recordTitleAttribute = 'nombre';
 
@@ -31,7 +33,7 @@ class PasajeroResource extends Resource
     {
         return PasajerosTable::configure($table);
     }
-     
+
     //esto es para colocar los relationManager
     public static function getRelations(): array
     {
