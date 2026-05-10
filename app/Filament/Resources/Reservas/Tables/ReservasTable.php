@@ -23,23 +23,47 @@ class ReservasTable
             ->columns([
                 TextColumn::make('pasajero.nombre')
                     ->label('Pasajero')
+                    ->description(fn ($record): ?string => $record->pasajero ? "{$record->pasajero->apellido} - DNI {$record->pasajero->dni}" : null)
+                    ->searchable(['pasajero.nombre', 'pasajero.apellido', 'pasajero.dni'])
                     ->sortable(),
                 TextColumn::make('habitacion.habitacion_numero')
                     ->label('Habitación')
+                    ->badge()
+                    ->description(fn ($record): ?string => $record->habitacion?->estado)
                     ->sortable(),
                 TextColumn::make('fecha_entrada')
-                    ->date()
+                    ->label('Check-in')
+                    ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('fecha_salida')
-                    ->date()
+                    ->label('Check-out')
+                    ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('numero_personas')
+                    ->label('Huéspedes')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('estado'),
-                TextColumn::make('tipo_pago'),
+                TextColumn::make('estado')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Pendiente' => 'warning',
+                        'Confirmada' => 'success',
+                        'Cancelada' => 'danger',
+                        'Completada' => 'gray',
+                        default => 'gray',
+                    }),
+                TextColumn::make('tipo_pago')
+                    ->label('Pago')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Efectivo' => 'success',
+                        'Tarjeta' => 'info',
+                        'Transferencia' => 'warning',
+                        default => 'gray',
+                    }),
                 TextColumn::make('total_pagado')
-                    ->numeric()
+                    ->label('Importe')
+                    ->money('ARS', locale: 'es_AR')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
