@@ -2,11 +2,6 @@
 
 namespace App\Filament\Resources\Reservas\Tables;
 
-
-
-
-
-
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -27,10 +22,14 @@ class ReservasTable
                     ->searchable(['pasajero.nombre', 'pasajero.apellido', 'pasajero.dni'])
                     ->sortable(),
                 TextColumn::make('habitacion.habitacion_numero')
-                    ->label('Habitación')
+                    ->label('Habitación Fís.')
                     ->badge()
                     ->description(fn ($record): ?string => $record->habitacion?->estado)
                     ->sortable(),
+                TextColumn::make('tipoSolicitado.tipo_nombre')
+                    ->label('Tipo Vendido')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('fecha_entrada')
                     ->label('Check-in')
                     ->date('d/m/Y')

@@ -14,7 +14,6 @@ class Pasajero extends Model
         'email',
     ];
 
-
     public function habitaciones()
     {
         return $this->belongsToMany(Habitacione::class, 'reservas', 'pasajero_id', 'habitacion_id')

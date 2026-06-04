@@ -18,9 +18,13 @@ use UnitEnum;
 class TipoResource extends Resource
 {
     protected static ?string $model = Tipo::class;
-    protected static string | UnitEnum | null $navigationGroup = 'Gestion hotelera';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Gestion hotelera';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
     protected static ?string $navigationLabel = 'Tipos de habitaciones';
+
     protected static ?string $recordTitleAttribute = 'tipo_nombre';
 
     public static function form(Schema $schema): Schema
