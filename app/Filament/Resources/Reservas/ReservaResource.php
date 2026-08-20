@@ -18,9 +18,13 @@ use UnitEnum;
 class ReservaResource extends Resource
 {
     protected static ?string $model = Reserva::class;
+
     protected static ?string $navigationLabel = 'Reservas del hotel';
-    protected static string | UnitEnum | null $navigationGroup = 'Gestion hotelera';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Gestion hotelera';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDateRange;
+
     protected static ?string $recordTitleAttribute = 'estado';
 
     public static function form(Schema $schema): Schema

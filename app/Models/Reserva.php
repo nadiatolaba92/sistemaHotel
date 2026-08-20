@@ -9,6 +9,7 @@ class Reserva extends Model
     protected $fillable = [
         'pasajero_id',
         'habitacion_id',
+        'tipo_solicitado_id',
         'fecha_entrada',
         'fecha_salida',
         'numero_personas',
@@ -25,5 +26,10 @@ class Reserva extends Model
     public function habitacion()
     {
         return $this->belongsTo(Habitacione::class, 'habitacion_id');
+    }
+
+    public function tipoSolicitado()
+    {
+        return $this->belongsTo(Tipo::class, 'tipo_solicitado_id');
     }
 }

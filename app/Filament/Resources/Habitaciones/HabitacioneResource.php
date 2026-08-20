@@ -18,7 +18,9 @@ use UnitEnum;
 class HabitacioneResource extends Resource
 {
     protected static ?string $model = Habitacione::class;
+
     protected static string|UnitEnum|null $navigationGroup = 'Gestion hotelera';
+
     protected static ?string $navigationLabel = 'Habitaciones';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
