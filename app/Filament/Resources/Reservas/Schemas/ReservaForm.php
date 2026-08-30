@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Reservas\Schemas;
 
 use App\Models\Habitacione;
+use App\Models\Reserva;
 use App\Models\Tipo;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -34,8 +35,8 @@ class ReservaForm
                             DatePicker::make('fecha_salida')
                                 ->label('Fecha de salida')
                                 ->native(false)
-                                ->rule('after_or_equal:fecha_entrada')
-                                ->helperText('La salida no puede ser anterior a la fecha de entrada.')
+                                ->rule('after:fecha_entrada')
+                                ->helperText('La salida debe ser posterior a la fecha de entrada.')
                                 ->live()
                                 ->required(),
 
@@ -86,7 +87,7 @@ class ReservaForm
 
                             Select::make('tipo_solicitado_id')
                                 ->label('Tipo de Habitación (Vendido)')
-                                ->options(function (Get $get) {
+                                ->options(function (Get $get, ?Reserva $record) {
                                     $entrada = $get('fecha_entrada');
                                     $salida = $get('fecha_salida');
                                     $personas = $get('numero_personas');
@@ -96,8 +97,8 @@ class ReservaForm
                                     }
 
                                     $tipos = Tipo::where('capacidad_maxima', '>=', $personas)
-                                        ->whereHas('habitaciones', function (Builder $query) use ($entrada, $salida) {
-                                            $query->disponibles($entrada, $salida);
+                                        ->whereHas('habitaciones', function (Builder $query) use ($entrada, $salida, $record) {
+                                            $query->disponibles($entrada, $salida, $record?->getKey());
                                         })
                                         ->orderBy('capacidad_maxima', 'asc')
                                         ->get();
@@ -113,7 +114,7 @@ class ReservaForm
 
                             Select::make('habitacion_id')
                                 ->label('Habitación Asignada (Física)')
-                                ->options(function (Get $get) {
+                                ->options(function (Get $get, ?Reserva $record) {
                                     $entrada = $get('fecha_entrada');
                                     $salida = $get('fecha_salida');
                                     $tipoSeleccionado = $get('tipo_solicitado_id');
@@ -123,7 +124,7 @@ class ReservaForm
                                         return [];
                                     }
 
-                                    $habitaciones = Habitacione::disponibles($entrada, $salida)
+                                    $habitaciones = Habitacione::disponibles($entrada, $salida, $record?->getKey())
                                         ->whereHas('tipo', function (Builder $q) use ($personas) {
                                             $q->where('capacidad_maxima', '>=', $personas);
                                         })
