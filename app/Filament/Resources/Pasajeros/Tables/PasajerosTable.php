@@ -18,7 +18,12 @@ class PasajerosTable
                     ->searchable(),
                 TextColumn::make('apellido')
                     ->searchable(),
+                TextColumn::make('nacionalidad')
+                    ->searchable(),
+                TextColumn::make('provincia')
+                    ->searchable(),
                 TextColumn::make('dni')
+                    ->label('DNI/Pasaporte')
                     ->searchable(),
                 TextColumn::make('teléfono')
                     ->searchable(),

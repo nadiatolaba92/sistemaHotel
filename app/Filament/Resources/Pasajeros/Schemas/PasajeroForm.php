@@ -17,8 +17,12 @@ class PasajeroForm
                 TextInput::make('apellido')
                     ->label('Apellido')
                     ->required(),
+                TextInput::make('nacionalidad')
+                    ->label('Nacionalidad'),
+                TextInput::make('provincia')
+                    ->label('Provincia'),
                 TextInput::make('dni')
-                    ->label('DNI')
+                    ->label('DNI/Pasaporte')
                     ->required(),
                 TextInput::make('telefono')
                     ->tel()
